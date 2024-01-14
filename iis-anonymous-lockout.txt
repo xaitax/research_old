@@ -1,0 +1,59 @@
+--/ INTRODUCTION  --
+
+
+Advisory           : 07-05_IIS-Anonymous-Lockout
+Release Date       : 07. May 2002
+Application        : IIS 4.0 - Windows NT4
+                     IIS 5.0 - Windows 2000
+Impact             : Website running IIS can be shutdown.
+Vendor Status      : M$ was contacted and states this is intended
+                     functionality.
+Author             : xaitax [ah@primepage.de]
+
+
+--/    SUMMARY    --
+
+
+There is a default account used by the IIS for anonymous access. This
+account has the name "IUSR_COMPUTERNAME" and can be locked out. If
+this account is locked off, noone has anonymous access, every request
+will be denied. Any IIS using this account and can be made ti prompt
+for authentication is vulnerable. So, a website can easiely be
+shutdown remote. It is a policy.
+
+
+--/   REPRODUCE   --
+
+
+Server Setup:
+ - Configure a machine with Windows2000 Server and the name "ATTACKED"
+ - Configure a static IP address (for this example 192.168.0.1)
+ - Install IIS and configure it to host a web site (use default
+   settings)
+ - Ensure the account IIS uses for anonymous access is left at the
+   default IUSR_EXAMPLENAME
+ - Configure the machines Account Lockout Policy as follows:
+   Account lockout duration: 0
+   Account lockout threshold: 3
+   Reset account lockout counter after: 60 minutes
+
+Client Setup:
+ - Configure a machine with Windows2000 Professional (for simplicity
+   place it on same network segment as the server with an IP of
+   192.168.0.2)
+ - Make a new local account named unique username
+ - Log off and then back on as this new user
+ - Go to start > run and type "\\192.168.0.1\admin$" without quotes
+ - When prompted for a Username/password use: IUSR_ATTACKED for the
+   username and for the password type "nopassword" (or anything equally
+   absurd)
+ - Repeat the last 2 steps 4 times
+ - Open IE and in the address bar type: http://192.168.0.1
+ - You will receive an error page telling you access has been denied
+
+
+--/     GREETS     --
+
+
+UL, UNF, THC, TESO
+

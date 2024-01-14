@@ -1,0 +1,279 @@
+<HTML><HEAD><TITLE>SNiFFiNG</TITLE>
+</HEAD>
+<BODY text=#000000 vLink=#333399 aLink=#333399 link=#333399 
+bgColor=#ffffff><FONT face=verdana size=2>SNiFFiNG</FONT> 
+<HR align=left width="10%" noShade SIZE=1>
+<BR><FONT face=verdana size=2>1.) &nbsp;<A 
+href="#1">Einführung</A><BR>2.) 
+&nbsp;<A href="#2">Was ist ein 
+Sniffer</A><BR>3.) &nbsp;<A 
+href="#3">Wie arbeitet ein 
+Sniffer</A><BR>4.)&nbsp; <A 
+href="#4">Gefahren eines 
+Sniffers</A><BR>5.)&nbsp; <A 
+href="#5">Was kann ich gegen Sniffer 
+machen</A><BR>6.)&nbsp; <A 
+href="#6">Wo werden Sniffer 
+eingesetzt</A><BR>7.)&nbsp; <A 
+href="#7">Wo bekomme ich kommerzielle 
+Sniffer</A><BR>8.) &nbsp;<A 
+href="#8">Wo bekomme ich freeware 
+Sniffer</A><BR>9.) &nbsp;<A 
+href="#9">Weitere 
+Informationen</A><BR><BR><BR><U><A name=1></A>1.) Einführung</U><BR><BR>In 
+diesem Paper möchte ich euch mal ein wenig verdeutlichen was Sniffer sind, wie 
+sie arbeiten, welche Einsatzmöglichkeiten ein Sniffer einem bietet und vor allem 
+wo und warum man Sniffer einsetzt. Welche Eigenschaften der Sniffer besitzt, 
+etc. In diesem Paper soll auch verdeutlicht werden, warum die neue TCP/IP 
+Variante "IPv6" nötig ist, wenn man sich den Datenfluss, im noch so unsicheren 
+Internet, einmal anschaut.<BR><BR><BR><U><A name=2></A>2.) Was ist ein 
+Sniffer</U><BR><BR>Sniffer fangen Netzwerkpakete ab. Ihr einziger Zweck besteht 
+darin, den Netzwerkverkehr zu analysieren. So können sie Gefahrenbereiche 
+aufspüren und der Admin hat es leichter sich im Netzwerk zurechtzufinden und 
+Problemlösungen zu konzipieren. Wenn z.B. ein Teil eines Netzwerkes nicht mehr 
+so arbeitet, wie es soll, dann kann man einen Sniffer einsetzen und feststellen 
+wo nun genau das Problem liegt, also an welcher Stelle des Netzwerkes die 
+Probleme sich befinden. Sniffer sind entweder Hardware oder Software. Es gibt 
+Programme, so genannte Auditing Tools, aber auch Geräte die Sniffer darstellen 
+können.<BR><BR>Sniffer lassen sich an einzelnen Computer im WWW/LAN/WAN 
+installieren und protokollieren den Datenstrom und geben die analysierten Daten 
+in der Regel in einer Datei zur Einsicht für den, der den Sniffer installiert 
+hat. Das so genannte Output-File.<BR><BR>Ein Sniffer kann die verschiedensten 
+Protokolle auswerten. Ob nun TCP/IP(Ethernet/WWW), IPX, AppleTalk, Banyan VINES 
+oder LCC.<BR><BR>Sniffer arbeiten in der Regel immer aus einer Kombination aus 
+Hardware und Software. Es gibt Propiätere Sniffer und Freeware-Sniffer. 
+Propiätere Sniffer beinhalten normalerweise Service-Leistungen des Herstellers, 
+sind dafür aber auch recht teuer. Sind aber auch auf den "Sniff- Verkehr" 
+abgestimmt und optimiert. Die Freeware-Sniffer dagegen sind billig und 
+beinhalten keine Serviceleistungen, außer vielleicht mal E-Mail Support. Und in 
+der Komplexität sind sie oft auch nicht so gut wie Propiätere 
+Sniffer.<BR><BR><BR><U><A name=3></A>3.) Wie arbeitet ein Sniffer</U><BR>In 
+einem Netzwerk sind alle Rechner ja bekanntlich verkabelt und dem entsprechend 
+auch verbunden. Das findet über Hub´s statt. Jedes Netzwerkinterface eines 
+Rechners hat seine eigene Adresse(IP). Und durch diese Adresse unterscheidet 
+sich dieser Rechner von allen anderen. Keiner ist dementsprechend gleich. Die 
+Verteilung der Daten arbeitet so, dass jeder an das jeweils angeschlosse Netz 
+die Daten in kleinen Paketen, so genannten Frames, an den Verteiler sendet und 
+dieser die erhaltenen, aber nicht weiter verarbeiteten, Daten an jeden Rechner 
+weiterleitet. Auch wenn nur ein Rechner die Daten annimmt und verarbeitet, 
+kommen sie überall an. Wird nun ein Datenpaket von einem Rechner verschickt, 
+können alle anderen Rechner dieses Paket auch _hören_, wenn es an ihnen vorbei, 
+zu der Zieladresse hin geschickt wird. Dementsprechend ist nicht sicher. Die 
+Rechner reagieren nur nicht auf solch ein Paket, wenn es nicht ausdrücklich an 
+sie adressiert ist. Ein Rechner nimmt nur ein Paket an, das an ihn adressiert 
+ist. Es wird zwar angenommen aber nicht weiterverarbeitet, wenn die 
+Header-Adresse nicht stimmt.<BR><BR>Der Sniffer versetzt nun das Interface des 
+Rechners in den Promiscuous Mode. Dieser Modus erlaubt nun die Verarbeitung und 
+Annahme der Pakete durch bestimmte Applikationen, auch wenn sie nicht für ihn 
+bestimmt sind. Ein Abfangen der Daten kann so erfolgreich sein.<BR><BR>Nun ist 
+der Sniffer soweit, das er richtig _arbeiten_ kann. Da es aber in der Regel 
+wenig Sinn macht alle Daten zu verwerten und zu analysieren, wird der Sniffer so 
+eingestellt, das er nur die relevanten Daten annimmt und analysiert. Das ist 
+dann oft nur der erste Teil des Frames oder der Sniffer wird so konfiguriert, 
+dass er nach bestimmten Sachen sucht. z.B. Passwörtern und Usernamen. Ist halt 
+davon abhängig wie der Sniffer nun eingestellt wurde. Wenn ein Scanner nun jedes 
+Paket komplett abfangen würde, wäre das Output- File nach sehr geringer Zeit so 
+riesig, dass eine gesamte Festplatte damit gefüllt sein kann. Wenn der Traffic 
+eben hoch ist, ist das Output-File auch sehr schnell, sehr groß. Wenn man aber 
+riesige Speicher-Medien zur Verfügung hat, kann man mit Sicherheit auch viel 
+mehr interessantere Daten abfangen. Aber man hat natürlich auch sehr viel 
+unnützes Zeug dabei.<BR><BR>*nix Scanner sind oft für solch gezielte Angriffe 
+konfiguriert. Sie werden aber nicht auf die Win Ebene emuliert, da man es nicht 
+verantworten will, das solch wichtige Daten/Programme in die Hände von kleinen 
+Script-Kiddies fallen, und somit ein _bisschen_ rumspielen und ihren 
+destruktiven Gedanken freien Lauf lassen können.<BR><BR><BR><U><A name=4></A>4.) 
+Gefahren eines Sniffers</U><BR><BR>Man muss halt unterscheiden zwischen Sniffern 
+und Keyloggern. Von beiden geht eine große Gefahr aus. Keylogger speichern Lokal 
+alle Tastaturanschläge, die auch in der Output-File gespeichert werden, aber 
+solange keine Tastenschläge übers Net versandt werden, geht auch keine Gefahr 
+von den Keyloggern aus. Wenn man sich z.B. im Internet über keine 
+SSL(Secure-Socket-Layer)-Verbindung irgendwo einloggt, kann und wird der Sniffer 
+diese Daten abfangen. Nehmen wir nun einmal an, man sitzt mit 10 Leuten in einem 
+Firmeninternen Netzwerk. Ich sitze an Rehner A und einer meiner Kollegen an 
+Rechner B. Wenn mein Kollege nun ins Internet möchte, fließen seine Daten an 
+meinem Rechner vorbei um an das Gateway zu gelangen, welches den Internetzugang 
+ermöglicht. Er loggt sich bei GMX korrekt mit seinen Benutzerdaten ein. Da er 
+keinen kostenpflichtige SSL Verbindung von GMX nutzt rauschen natürlich sein 
+Benutzername und sein Passwort an meinem Rechner vorbei. Normal, aber da ich das 
+Interface in den Promiscuous Mode versetzt habe, nimmt mein Interface, dank des 
+Sniffers, die Daten auch an und verwertet sie. Nun schau ich in das Output-File 
+und sehe seine Daten. Das ist die Gefahr bei Sniffern.<BR><BR><BR><U><A 
+name=5></A>5.) Was kann ich gegen Sniffer machen?</U><BR><BR>Sniffer aufzudecken 
+und zu bereinigen erfordert sehr gute Kenntnisse im Bereich der 
+Netzwerktopologie. Denn Sniffer hinterlassen keine Spuren, die man einfach mit 
+einem Auditing-Tool aufspüren kann. Sniffer sind Programme die im Hintergrund 
+laufen, also passive Programme. Wenn sie nicht gerade alles was im Netzwerk 
+_herumschwirrt_ sniffen, sondern wie schon oben beschrieben, eben nur die 
+Frames, dann verbrauchen sie nur ganz wenige Netzwerkressourcen, und dann werden 
+sie auch nicht von Auditing-Tools aufgespürt. Aber wenn man sich ins Netzwerk 
+mit einem ganz neuen Rechner incl. Sniffer einloggt, dann muss auch er eine 
+IP-Adresse haben. Ist im Netzwerk eine Netzwerktopoloie-Karte integriert, fällt 
+es auf, wenn plötzlich eine neue IP-Adresse sich darin befindet. Aber normale 
+Firmen können sich in der Regel einen solchen Aufwand nicht leisten. Deswegen 
+werden Sniffer heutzutage sehr selten erkannt.<BR><BR>Sniffer in großen 
+Netzwerken zu erkennen ist sehr schwer, wenn man sich den oberen Absatz 
+durchgelesen hat. In kleineren ist es da schon einfacher. Man checked einfach 
+jeden einzelnen Rechner auf deren Prüfsummen. Dafür gibt es einige Tools, die 
+das Aufspüren eines Sniffers erleichtern. Aber diese Tools funktionieren nur aus 
+Solaris und SunOS Systemen. Sie heissen Snifftest, Nitwit, Promisc. und cpm. 
+Einfach mal bei google.com suchen.<BR><BR>Es gibt also keine wirklich 
+funktionierenden Maßnahmen, die einem helfen, sich vor Sniffern zu schützen. 
+Solange IPv6 nicht implementiert ist, sind und bleiben Sniffer nach wie vor 
+große Sicherheitsrisiken. Hier kommen aber mal ein paar grundlegende Sachen, wie 
+man sich vor Sniffern schützen bzw. sie abwehren kann.<BR><BR></FONT>
+<TABLE borderColor=gray border=2>
+  <TBODY>
+  <TR>
+    <TD>
+      <DIV align=center><FONT face=Verdana size=2>Datenverteilung</FONT> 
+    </DIV></TD>
+    <TD><FONT face=Verdana size=2>Der eigentliche Angriffspunkt eines Sniffers 
+      besteht ja in der Eigenschaft des Hubs, die empfangenen Daten 
+      grundsätzlich an alle an ihm angeschlossene Rechner zu senden. Will man 
+      sichergehen, kann man anstelle von Hubs auch Switches oder auto-switching 
+      Hubs verwenden, welche die Daten im Gegensatz zu den meistens verwendeten 
+      Hubs die Daten auch wirklich nur an den Zielrechner weiterleiten. Diese 
+      Geräte sind jedoch auch dementsprechend teurer. Man kann aber auch nur 
+      wirklich gefährdete Systeme mittels Switches verbinden, wodurch jedoch im 
+      Endeffekt auch nicht alle Rechner vor Angriffen durch Sniffer geschützt 
+      sind. Hieraus wird ersichtlich, dass diese Vorbeugungsmöglichkeit zwar 
+      möglich ist, jedoch trotzdem gewisse Nachteile besitzt.</FONT> </TD></TR>
+  <TR>
+    <TD>
+      <DIV align=center><FONT face=Verdana size=2>Netzwerkkarte</FONT> </DIV></TD>
+    <TD><FONT face=Verdana size=2>Eine einfachere und kostengünstige Variante 
+      ist es, die am LAN angeschlossenen Computer mit der richtigen 
+      Netzwerkkarte auszurüsten. Da ein Sniffer nur dann funktionieren kann, 
+      wenn sich die Netzwerkkarte im Promiscuous Mode befindet, scheint die 
+      entsprechende Lösung offensichtlich: Es sollten im LAN nur Netzwerkkarten 
+      verwendet werden, welche diesen Modus nicht zulassen. Anbieter, welche 
+      solche Karten noch in ihrem Sortiment haben könnten wären beispielsweise 
+      3Com, IBM, Hewlett-Packard oder Intel</FONT> </TD></TR>
+  <TR>
+    <TD>
+      <DIV align=center><FONT face=Verdana size=2>IPv6</FONT> </DIV></TD>
+    <TD><FONT face=Verdana size=2>Schon bald wird sich die neue Version von 
+      TCP/IP durchsetzen, welches als IPv6 oder IPng bekannt ist. Dieses 
+      Protokoll beinhaltet auch IPsec, bei welchem die Daten auf Netzwerkebene 
+      verschlüsselt werden und nur vom wirklichen Zielrechner wieder 
+      entschlüsselt werden kann. Genauer soll hier jedoch nicht auf IPv6 
+      eingegangen werden. Sobald dieses Protokoll jedoch den neuen Standart im 
+      Netz darstellen wird, gibt es keine Probleme mehr mit Sniffern.</FONT> 
+  </TD></TR>
+  <TR>
+    <TD>
+      <DIV align=center><FONT face=Verdana size=2>Kryptografie</FONT> </DIV></TD>
+    <TD>
+      <P><FONT face=Verdana size=2>In Applikationen verwendete Verschlüsselung 
+      ist wohl das wichtigste Mittel zum Schutz vor Sniffer-Attacken.<BR>Um 
+      Datenübertragungen sicher zu gestalten, kann man diese verschlüsseln. Für 
+      grössere Netzwerke können Sicherheitsmechanismen wie etwa S/Key oder 
+      SecureID Token in Betracht kommen. Dabei handelt es sich die Vergabe von 
+      Passwörtern, welche nur einmal gültig sind. Leider sind diese Verfahren 
+      ziemlich aufwendig und werden von den Benutzern auch nicht gerne 
+      angenommen, denn schliesslich hat man lieber ein eigenes und beständiges 
+      Passwort.<BR>Auch für Zugriffe auf Mailaccounts gibt es eine sichere 
+      Methode namens S/POP, welche die Daten ebenfalls verschlüsselt 
+      übermittelt. Man kann zwar seine Mails per PGP verschlüsseln, doch sind 
+      dann auch wirklich nur die Mails verschlüsselt. Damit hat es sich dann 
+      jedoch auch schon wieder.</FONT> </P>
+      <P><BR><FONT face=Verdana size=2>SSL:<BR>Im Internet gibt es zur 
+      Verschlüsselung von HTTP-Übertragungen das sogenannte SSL. Browser mit 
+      entsprechend starker Verschlüsselung sind auch schon gut erhältlich. 
+      Schändlich ist hingegen, dass viele Anbieter die Verwendung von SSL nur 
+      kommerziell anbieten. Wer etwa eine eMail-Adresse bei GMX anmeldet, kann 
+      diese zwar frei benutzen, die Verwendung von SSL ist jedoch nur durch 
+      Bezahlung. bei Web.de hingegen bekommt man das kostenlos. Man sollte also 
+      darauf achten, welche Dienstleistungen man von unsicheren Netzen aus in 
+      Anspruch nimmt. Auch für den Verkehr via eMail gibt es verschiedene 
+      Möglichkeiten, um den Datentransport sicher zu gestalten.</FONT> </P>
+      <P><FONT face=Verdana size=2>SSH:<BR>Da Telnet alle Daten wie etwa 
+      Passwörter und Befehle unverschlüsselt übermittelt, musste man eine neue 
+      Möglichkeit entwickeln, um über Telnet einzuloggen. Anstelle des üblichen 
+      Telnet-Clients kann man einen SSH-Client verwenden, welcher die Daten nur 
+      sicher verschlüsselt übermittelt.</FONT> </P>
+      <P><FONT face=Verdana size=2>Im Endeffekt gibt es jedoch immer wieder 
+      Programme, welche zwar über das Netzwerk fungieren, jedoch keine 
+      Möglichkeit zur Verschlüsselung bieten. Erst wenn IPv6 zum Einsatz kommt, 
+      kann man von einer sicheren Übertragung ausgehen, da dort die Daten an 
+      sich bereits verschlüsselt übertragen werden und ein Sniffer somit nichts 
+      mit ihnen anfangen kann.</FONT> </P></TD></TR>
+  <TR>
+    <TD>
+      <DIV align=center><FONT face=Verdana size=2>Stationen-checken</FONT> 
+    </DIV></TD>
+    <TD><FONT face=Verdana size=2>Der Administrator kann auch die im LAN 
+      befindlichen Rechner auf entsprechende Netzwerkkarten im Promiscuous Mode 
+      oder verdächtigen Applikationen checken. Benutzt der Angreifer jedoch ein 
+      zwischengehängtes Notebook, welches er jeweils wieder mitnimmt, so ist 
+      diese Variante wohl eher weniger effektiv. Es mag also in kleineren, gut 
+      überschaubaren Netzen eine Möglichkeit darstellen, ist jedoch vorallem in 
+      grösseren Netzen zum einen sehr aufwendig und zum anderen nicht gerade 
+      eine sichere Garantie.</FONT> </TD></TR>
+  <TR>
+    <TD>
+      <DIV align=center><FONT face=Verdana size=2>Reaktionszeit</FONT> </DIV></TD>
+    <TD>
+      <P align=left><FONT face=Verdana size=2>Sendet man Daten an einen Rechner, 
+      dessen Netzwerkinterface sich im Promiscuous Mode befindet, so wird die 
+      Reaktionszeit länger dauern als normalerweise üblich. Es gibt Programme, 
+      welche Netzwerke auf ihre Reaktionszeit testen können. Dies wird auch 
+      verwendet, um etwa Schwachstellen in Bezug auf die Performance eines 
+      Netzwerkes zu testen. Testet man nun ein Netzwerk regelmässig auf die 
+      Reaktionszeit der einzelnen angeschlossenen Rechner, lässt sich so ein 
+      Rechner, welcher einen potentiellen Sniffer darstellt gut lokalisieren und 
+      dann lokal auf Sniffer überprüfen.</FONT> </P></TD></TR>
+  <TR>
+    <TD>
+      <DIV align=center><FONT face=Verdana size=2>Anti-Sniffer</FONT> </DIV></TD>
+    <TD><FONT face=Verdana size=2>Es werden im Netz verschiedenste Programme 
+      zum Aufspüren von Sniffern angeboten. Jene Programme, welche den Rechner 
+      konktrollieren, auf welchen man gerade lokal zugreift, mögen zwar ihren 
+      Zweck erfüllen, doch sind sie kaum von grossem Nutzen. Es gibt jedoch auch 
+      Programme, welche feststellen sollen, ob ein anderer Rechner gerade 
+      snifft. Es gilt bei solchen Programmen, immer etwas skeptisch zu bleiben, 
+      da meist nur Bugs gewisser Netzwerkkarten oder Programme verwendet werden, 
+      um auf solche Attacken aufmerksam zu werden.</FONT> 
+</TD></TR></TBODY></TABLE><FONT face=verdana size=2><BR><BR><BR><U><A 
+name=6></A>6.) Wo werden Sniffer eingesetzt</U><BR><BR>Eigentlich überall ;D 
+Nein, also, am häufigsten findet man Sniffer natürlich an Rechnern, wo am 
+meissten Traffic herrscht, da dort natürlich und logischerweise die meissten und 
+wichtigsten Daten vorbei fliessen_ und so der Sniffer die wichtigsten Daten 
+_mithören_ kann. Aber auch werden sie oft an Gateways eines LAN´s installiert, 
+da sie den Weg zum WWW bringen. Also, da wo am meissten Traffic herrscht und 
+dort, wo man die meissten wichtigen Daten erwarten kann.<BR><BR>Hat man sich in 
+einen Rechner _gehacked_, dann werden auch Sniffer installiert, solange man root 
+hat, die dann in den seltesten Fällen erkennt werden, ausser das Output-File 
+wird zu groß oder es wird zu viel gesniffed. So versucht sich der Angreifer 
+weitere Passwörter zu ersniffen, die an der gehackten Box eingegeben werden. Das 
+ist ein normales Mittel der Hacker, denn so ist es möglich weitere Rechner, dank 
+der ersniffeden Passwörtern, zu hacken.<BR><BR><BR><U><A name=7></A>7.) Wo 
+bekomme ich kommerzielle Sniffer</U><BR><BR>- <A 
+href="http://www.networkassociates.com/">ATM Sniffer Network Analyzer</A><BR>- 
+<A href="http://www.shomiti.com/">Shomiti System Cenrury LAN Analyzer</A><BR>- 
+<A href="http://www.klos.com/">PacketView von Klos Technologies</A><BR>- <A 
+href="http://www.netcommcorp.com/">Network Probe 8000</A><BR>- <A 
+href="http://www.guesswork.com/">LANWatch</A><BR>- <A 
+href="http://www.neon.com/">NetMinder Ethernet</A><BR>- <A 
+href="http://www.net3group.com/">ProConvert</A><BR>- <A 
+href="http://www.triticom.com/">LANdecoder32</A><BR>- <A 
+href="http://www.people-network.com/">NetAnt Protocol 
+Analyzer</A><BR><BR><BR><U><A name=8></A>8.) Wo bekomme ich freeware 
+Sniffer</U><BR><BR>- <A 
+href="http://sniffit.rug.ac.be/sniffit/sniffit.html">Sniffit</A><BR>- <A 
+href="http://ethereal.zing.org/">Ethereal</A><BR>- <A 
+href="http://www.chaostic.com/filez/exploites/Esniff.c">Esniff</A><BR>- <A 
+href="http://www.hellhackerz.com/toolz/nttoolz/gobbler_packet_sniffer.zip">Gobbler</A><BR>- 
+<A href="http://www.computercraft.com/noprogs/ethld104.zip">Ethload</A><BR>- <A 
+href="http://www.ndg.com.au/">Netman</A><BR><BR><BR><U><A name=9></A>9.) Weitere 
+Informationen</U><BR><BR>- <A target=_blank 
+href="http://www.morehouse.org/secure/sniffaq.htm">Sniffer FAQ von Christopher 
+Klaus in Englisch</A><BR>- <A target=_blank href="http://www.ipv6.com/">IPv6 und 
+alles was dazugehört in Englisch</A><BR>- <A target=_blank 
+href="http://www.robertgraham.com/pubs/sniffing-faq.html">Das ultimative FAQ von 
+Robert Graham aber leider auch in Englisch</A><BR><BR><BR>
+<HR align=left width="10%" noShade SIZE=1>
+Autor: xaitax<BR>Kontakt: <A 
+href="mailto:ah@primepage.de">ah@primepage.de</A><BR>Web: <A 
+href="http://xaitax.de/">http://xaitax.de/</A> | <A 
+href="http://xaitax.de/xaitax.asc/">PGP KEY</A></FONT> </BODY></HTML>

@@ -1,0 +1,935 @@
+|=----------------------=[ CATCHiNG THE AiR STUFF ]=---------------------=|
+|=-----------------------------------------------------------------------=|
+|=-----=[ xaitax <ah@primepage.de> | harl3kin <adults-only@gmx.de>=------=|
+|=-----------------------------------------------------------------------=|
+|=---------------------------[ V.2 | 02/09/18 ]--------------------------=|
+
+
+----|1| iNTRODUCTiON
+
+
+Dieser Text soll die (Sicherungs-)Moeglichkeiten aufweisen, welche von 
+noeten sind, damit man ein sicheres Wireless Lan aufbauen kann. Dies ist 
+die Version 1.0. Die folgenden Versionen werden sich tiefergehend mit 
+Angriffsmethoden, sprich dem Knacken von WEP, dem Hi-Jacking und dem 
+Sniffen generell beschaeftigen.  
+
+
+----|2| WLAN? WLAN!
+
+
+Das sogenannte "Wireless LAN" findet als Computernetz mit Funkzugang eine
+zunehmende Verbreitung. Es gibt sowohl oeffentliche WLAN-Angebote als auch
+Firmennetze mit dieser Technik. Ein WLAN stellt allerdings besonders hohe 
+Anforderungen an die Sicherheit da die physikalische Sicherheit der 
+Datenuebertragenden Verbindung im Gegensatz zum Kabel nicht mehr so leicht 
+zu gewaehrleisten ist.
+
+Aufgrund einiger Schwachstellen aeusserten in einer repraesentativen 
+Umfrage mehr als 90% der 1,268 Befragten gewisse oder sogar grosse Bedenken 
+im Zusammenhang mit dieser Technologie.
+
+Von den Risiken abgesehen, ist bei WLAN Installationen ein klarer 
+Aufwärtstrend zu erkennen. Allein 1999 wurden welweit ca. 1.4 Millionen 
+WLAN Module ausgeliefert. Diese Zahl hat sich in 2000 nahezu vervierfacht 
+(4.9 Millionen) und fuer das Jahr 2006 lautet die Prognose auf 55.9 
+Millionen, was laut einer vorrausgehenden Studie von ABI 
+(http://www.alliedworld.com) einem Markt von ca. $4.5 Billionen entspricht.
+
+Der vom Institute of Electrical and Electronics Engineers (IEEE) 1999 
+verabschiedete Standard 802.11b High-Rate, eine Weiterentwicklung des 1997 
+verabschiedeten 802.11-Standards fuer Uebertragungsraten bis maximal 
+3 MBit/s und besser bekannt unter dem Namen Wi-Fi (fuer "Wireless
+Fidelity"), lehnt sich hinsichtlich seiner Spezifikation nahe an 
+existierende Ethernet-Standards an und wird daher in Fachkreisen oftmals 
+auch als "Wireless Ethernet" bezeichnet. Die Bruttouebertragungsrate liegt 
+bei 11 MBit/s - netto werden etwa bis zu 7 MBit/s erreicht. Es handelt sich 
+nicht um einen Industriestandard, sondern um eine Spezifikation eines 
+internationalen Standardisierungsgremiums. Integration und Kompatibilitaet 
+mit existierender Netzwerktechnik beziehungsweise -infrastruktur waren 
+grundlegende Anforderungen. Doch wie genau manifestiert sich diese Naehe 
+zum bekannten, kabelbasierten Ethernet? 
+
+Wie alle IEEE-802-Standards basiert auch 802.11 auf den unteren beiden 
+Schichten des ISO-OSI-Modells, der Bit-Uebertragungsschicht - also dem 
+Physical Layer - und der Sicherungsschicht - dem Data Link Layer. Jegliche 
+LAN-Applikationen, Netzwerkbetriebssysteme und -protokolle sind folglich 
+problemlos mit 802.11-basierten Funk-LAN-Standards einsetzbar. Der 
+wesentliche Unterschied zwischen 802.11, dem ersten WLAN-Standard und der 
+Weiterentwicklung 802.11b findet sich in der Bituebertragungsschicht mit 
+hoeheren Datenraten. Erlaubt 802.11 den Einsatz beider Verfahren - 
+Frequency Hopping Spread Spectrum (FHSS), kommt in der schnelleren 
+b-Variante ausschliesslich Direct Sequence Spread Spectrum (DSSS) zum 
+Einsatz.
+ 
+|-----------------------|
+|   Anwendungsschicht   |
+|  (Application Layer)  |
+|                       |
+|-----------------------|
+|-----------------------|
+|  Darstellungsschicht  |
+|  (Presentation Layer) |
+|                       |
+|-----------------------|
+|-----------------------|
+| Kommunikationsschicht |
+|   (Session Layer)     |
+|                       |
+|-----------------------|
+|-----------------------|
+|   Transportschicht    |
+|   (Transport Layer)   |  <= Transport Control Protocol (TCP)
+|                       |
+|-----------------------|
+|-----------------------|
+|  Vermittlungsschicht  |
+|   (Network Layer)     |  <= Internet Protocol (IP) 
+|                       |
+|-----------------------|
+|-----------------------|  |-------------------------|
+|   Sicherungsschicht   |  |Logical Link Control(LLC)|
+|   (Data Link Layer)   |  |-------------------------|
+|                       |  |Medium Access Layer (MAC)|
+|-----------------------|  |-------------------------|
+|-----------------------|  |-------------------------|
+| Physikalische Schicht |  |   Physikalischer Layer  |
+|   (Physical Layer)    |  |          (PHY)          |
+|                       |  |                         |
+|-----------------------|  |-------------------------|
+
+           ^^                           ^^
+    ISO/OSI Schichten            IEEE 802 Standard
+
+
+Der IEEE 802.11b (Wi-Fi) Standard hat unterschieldiche Verhaltensweisen zu 
+Bluetooth. Deswegen darf man die beiden nicht in einen Topf werfen. Hier
+noch ein paar technische Details zu Wi-Fi:
+
+|----------------------------------------------------|
+|            IEEE 802.11b Technische Details         |
+|----------------------------------------------------|
+|-------------------------||-------------------------|
+|        Reichweite       ||        max. 150m        |
+|-------------------------||-------------------------|
+|-------------------------||-------------------------|
+|      Transferrate       ||        11 Mbit/s        |
+|-------------------------||-------------------------|
+|-------------------------||-------------------------|
+|        Frequenz         ||         2,4 GHz         |
+|-------------------------||-------------------------|
+|-------------------------||-------------------------|
+|    Sprachfaehigkeit     ||           JA            |
+|-------------------------||-------------------------|
+|-------------------------||-------------------------|
+| Sichterverbidung noetig ||          NEIN           |
+|-------------------------||-------------------------|
+
+
+----|3| SECURiNG POSSiBiLiTiES
+
+
+So praktisch die Einrichtung von WLANs auch ist, umso eingehender muss sich
+das "Opfer" mit den moeglichen Sicherheitsrisiken auseinandersetzen. Dies
+umso mehr, als die standardmaessig angebotene Hauptsicherheitsfunktion von
+WLANs, die Verschluesselung nach dem WEP-Standard, sich inzwischen als fuer
+kritische Anwendungen voellig unzureichend erwiesen hat. Tatsache ist, dass
+der WEP-Standard auf statischen Parametern beruht und deshalb mit
+geeigneten Werkzeugen schnell auszuhebeln ist. Die Mitglieder des
+Standardisierungsgremiums in der IEEE-Arbeitsgruppe 802.11 haben es
+naemlich versaeumt, ihre Loesung mit Kryptographieexperten zu diskutieren.
+Ausserdem: Im Ad-hoc-Modus funktioniert sowas grundsaetzlich nicht.
+
+Einen gewissen Basisschutz gegen unbefugtes Abhoeren eines WLANs bietet die
+Codierung der Bitstroeme mittels Spreizbandverfahren (Spread Spectrum, kurz
+SS), dessen eigentliche Aufgabe es ist, die an der Luftschnittstelle
+ueblichen Stoereinfluesse auszugleichen. Bei niedrigen Datenraten bis 3
+MBit/s benutzt man dabei das Frequenzsprungverfahren (Frequency Hopping,
+FHSS), darueber das Direktsequenzverfahren (Direct Sequence, DSSS). Das
+Mithoeren des Bitstroms bei FHSS gestaltet sich schwierig, weil hier dazu
+die Sprungsequenz von Traegerfrequenz zu Traegerfrequenz bekannt sein muss.
+Leider profitieren davon nur WLANs nach dem aelteren 802.11-Standard -
+schnellere Netze nach dem juengeren 802.11b-Standard nutzen alle das
+DSSS-Verfahren, welches auf der physikalischen Ebene vergleichsweise
+einfach mitzuhoeren ist. Daher sind hier die logischen Schutzfunktionen
+umso wichtiger. Dafuer gibt es bei WLANs fuer den sicheren Zugriff auf
+einen Access Point (AP) grundsaetzlich drei:
+
+- Service Set Identifier (SSID)
+- Media Access Control (MAC)
+- Filtering-, Wired-Equivalent- Privacy (WEP).
+
+Ein Verfahren allein bringt wenig Schutz. In Kombination lassen sich jedoch
+fuer kleinere Netze akzeptable Sicherheitslevels einrichten. Es gibt
+natuerlich auch Anwendungen, bei welchen grundsaetzlich keine
+Sicherheitsschranken vorgesehen sind, zum Beispiel bei Hotspots mit
+allgemeinem Netzzugang oder Konferenzen, wo sich die Teilnehmer mit ihren
+eigenen Laptops in ein Funknetz einklinken. In solchen Faellen ist den
+Beteiligten allerdings klar, dass es sich um eine "offene" Kommunikation
+handelt. So, nun schaun wir mal hinter die Kulissen ;)
+
+Mit Hilfe von SSID laesst sich ein Funk-LAN in mehrere Subnetze
+segmentieren, die ueber einen oder mehrere Access-Points (APs) erreichbar
+sind. Jeder einzelne AP bekommt eine SSID. Nur Endgeraete mit der gleichen
+SSID sind befugt, mit diesem AP zu kommunizieren. Ein Endgeraet kann dabei
+auch ueber mehrere SSIDs verfuegen, um so in verschiedenen Teilnetzen
+betrieben werden zu koennen. Die SSID-Funktion ist mit der Abfrage eines
+Passworts vergleichbar. Wenn ein AP allerdings so konfiguriert wird, dass
+er seine SSID "broadcastet" (die Standardeinstellung vieler WLANs), besteht
+keine Sicherheit mehr. Eine Gefahr liegt auch darin, dass SSIDs durch die
+weite Verbreitung an den Clients einer unkontrollierbaren Zahl von Nutzern
+bekannt werden.
+
+Werden APs anhand ihrer SSID erkannt, so lassen sich die einzelnen Clients
+als weitere Sicherheitsmassnahme durch die MAC-Adresse ihrer eingebauten
+Netzwerkkarte identifizieren. Allerdings ist die so gewonnene Sicherheit
+truegerisch: Die in jeder Netzwerkkomponente fest eingestellte MAC-Adresse
+wird immer im Klartext uebertragen - uebrigens auch bei eingeschalteter
+WEP-Verschluesselung - und laesst sich darueber hinaus jederzeit
+ueberschreiben. Diese Methode der Filterung von MAC-Adressen ist bei WLANs
+auch nur fuer kleine Netzwerke geeignet, weil die zu filternden
+MAC-Adressen hier manuell konfiguriert werden muessen.
+
+Mit dem WEP-Standard sollte die unsichere Luftschnittstelle gegen
+unbefugtes Abhoeren gesichert werden. Die im 802.11b-Standard enthaltene
+Verschluesselung mittels WEP wird von den meisten WLAN-Karten und
+Access-Points unterstuetzt. WEP spezifiziert in der Standardvariante die
+Verwendung eines statischen 40-Bit-Schluessels, in einer ueber den Standard
+hinausgehenden Implementierung (wird von vielen Herstellern unterstuetzt)
+eines Schluessels mit 104 Bit. In beiden Faellen wird dieser
+Krypto-Schluessel mit einer 24-Bit-Initialisierung (Initialisation Vector,
+kurz IV) verknuepft, woraus eine 64- beziehungsweise
+128-Bit-Verschluesselungssequenz resultiert. WEP benutzt dafuer den
+RC4-Algorithmus, der auch als Stream Cipher bekannt ist. Mit dieser
+Bitfolge wird ein Zufallsgenerator gespeist. Das Zufallsprinzip beschraenkt
+sich dabei jedoch auf die Auswahl von Werten innerhalb einer 24-Bit-Folge.
+Es werden also nicht wirklich zufaellig selbst Werte erzeugt. Mit der
+daraus resultierenden Bit-Sequenz werden die zu uebertragenden Daten durch
+eine simple Funktion verschluesselt. Der Standard enthaelt keine Anweisung
+fuer das Schluesselmanagement, sodass alle WEP-Schluessel manuell verwaltet
+werden muessen. Damit ist auch dieses Verfahren nur bis zu einer bestimmten
+Netzwerkgroesse praktikabel einsetzbar. Einige Hersteller bieten allerdings
+ein proprietaeres Schluesselmanagement, mit dem sich dieses Problem
+zumindest in homogenen Umgebungen umgehen laesst.
+
+Ein AP laesst sich wahlweise so konfigurieren, dass er entweder nur
+WEP-Verschluesselung (Open-System-Mode) oder WEP in Verbindung mit
+Authentifizierung (Shared-Key-Authentication-Mode) durchfuehrt. Weil sich
+aber alle Komponenten in einem WLAN denselben Schluessel teilen, kann WEP
+keine individuelle Authentifizierung eines Benutzers ausfuehren. Diese
+Schwachstelle im WEP-Standard umgehen Hersteller wie zum Beispiel Cisco
+durch eine dynamische Schluesselzuordnung nach einer erfolgreichen
+Authentifizierung. Dell empfiehlt seinen Kunden, die WEP-Schluessel
+regelmaessig zu aendern.
+
+Zwischenbilanz: WEP ist fuer Anwendungen mit hohen Sicherheitsanforderungen
+nicht zu empfehlen. Der geringe Umfang des IV mit 24 Bit fuehrt dazu, dass
+ein stark ausgelasteter AP innerhalb einer ueberschaubaren Zeit von fuenf
+bis zehn Stunden saemtliche Schluesselkombinationen aufgebraucht hat und
+danach mit der Wiederholung von Schluesseln beginnen muss. Ein geduldiger
+Angreifer hat dadurch die Moeglichkeit, zwei Nachrichten mit demselben
+Schluessel aufzufangen und sie danach relativ einfach zu entschluesseln.
+Darueber hinaus kann man sich aus dem Internet Programme wie z. B.
+"AiroPeek" oder "AirSnort" herunterladen, welche einem potenziellen
+Angreifer das Sniffing wesentlich erleichtern.
+
+Admins sollten sich ueber die vielfaeltigen Angriffsmoeglichkeiten auf ein
+WLAN Klarheit verschaffen und entsprechend den Sicherheitsanforderungen des
+eigenen Unternehmens klare Richtlinien erarbeiten, die als Basis fuer ein
+Sicherheitskonzept dienen. Damit lassen sich Risiken minimieren,
+vorausgesetzt, die betroffenen Benutzer werden ueber den Zweck der
+Richtlinie aufgeklaert. Grundsaetzlich sollte damit festgelegt werden, wer
+berechtigten Zugriff auf das WLAN erhaelt, wie die Integritaet und
+Qualitaet des existierenden Netzwerks beibehalten, wie Stoerungen durch
+andere Funknetze vermieden und Erweiterungen effizient kontrolliert werden
+koennen. Sorgfaeltige Planung, Inspektion der in Frage kommenden Plaetze
+fuer die Access-Points, ueberlegte Auswahl der einzusetzenden Geraete, Wahl
+des Netzwerknamens, Verschluesselung, Zugangskontrolle und Beschraenkung
+der Verkehrsarten sind Aspekte die hierbei sicherlich zu beachten sind. In
+das Sicherheitskonzept koennen je nach Anforderung weitere Methoden
+einbezogen werden, die nicht Bestandteil des 802.11b-Standards sind. Dazu
+zaehlen etwa Loesungen mit 802.1x (nicht zu verwechseln mit der
+Arbeitsgruppe 802.10, die derzeit ohnehin keine Aktivitaeten zur
+Standardisierung von Sicherheit in LANs betreibt), VPN-Tunneling,
+proprietaere Verschluesselung und Mobile-IP.
+
+Der heute als Entwurf vorliegende IEEE-Standard 802.1x beruht im
+Wesentlichen auf einer Authentisierung von Benutzern auf OSI-Schicht 2.
+Damit werden auf der Ebene der Netzinfrastruktur zugangsberechtigte
+Anwender anhand ihrer MAC-Adresse identifiziert. Der Entwurf soll sowohl im
+Ethernet als auch in WLANs gelten. In Verbindung mit Radius (Remote
+Authentication Dial In User Service) oder zentralen Sicherheits-Backends
+kann jeder einzelne Switch feststellen, ob ein Anwender die noetigen Rechte
+besitzt, um den Knoten zu passieren. Diese Abfrage bleibt fuer den Anwender
+transparent. 802.1x arbeitet Port-basierend, das heisst, es wird bereits an
+jedem physikalischen Port entschieden, ob Daten von einer verifizierten
+Quelle stammen. Der Switch benutzt dazu den Radius- oder ACE-Dienst ueber
+das Extensible-Authentication-Protocol (EAP). EAP ist das zentrale Element
+von 802.1x, welches massgeblich von Cisco und Microsoft eingebracht wurde.
+
+Als gaengige Alternative zu WEP wird in kommerziellen Netzwerken heute
+meist eine VPN-Loesung empfohlen. Mit dieser aus dem Internet-Umfeld
+bereits bekannten Methode wird ein sicherer Tunnel durch ein unsicheres
+Netz bereitgestellt. Das unsichere Netz ist in diesem Fall das WLAN. Dieser
+geschuetzte Tunnel kann wahlweise auf Layer 2 (mit L2TP) oder Layer 3 mit
+(IPsec) immer dann neu aufgebaut werden, wenn ein Anwender auf zentrale
+Netzressourcen zugreifen moechte. Der Zugang vom WLAN erfolgt ueber einen
+VPN-Server, wobei zwischen diesem und den APs ein virtuelles LAN
+zwischengeschaltet ist. Der Einsatz von IPsec erlaubt es ferner,
+proprietaere Verschluesselungsverfahren mit grosser Schluessellaenge
+einzusetzen. VPN-Loesungen sind nicht nur leistungsstark sondern auch
+skalierbar und erlauben die Gestaltung selbst groesster Netzwerke.
+
+Mobile-IP schliesslich ist eine Modifikation von IP, die es einem Client
+ermoeglicht, sich unter seiner zugeteilten IP-Adresse von beliebigen
+Netzanschluessen in das Firmennetz einzuloggen. Die Gefahr bei Mobile-IP
+besteht darin, dass es einem moeglichen Angreifer gelingt, den Datenverkehr
+zu seinem unerlaubt angeschlossenen Endgeraet umzuleiten. Deshalb ist es
+beim Einsatz von Mobile-IP unbedingt erforderlich, zusaetzliche
+Sicherheitsmechanismen zu aktivieren.
+
+Eine entsprechende Netzwerktopologie koennte beispielsweise so aussehen:
+
+                
+------------      (  |  )       ---------   ------------   /-----------\   
+| Firewall |--- ((  VPN  ))--- / Switch /---| Firewall |---|ext. Router|   
+------------       |A|P|       ---------    ------------   \-----------/       
+                
+
+Der einzige von den Firewalls erlaubte Traffik sollte in diesem Fall VPN
+sein, alles andere generell geblockt werden. Eine echte Point-to-Point
+Verschluesselung ist hier die beste Alternative.
+
+VPN for Safety's Sake
+
+VPNs sind mit Sicherheit die momentan beste Loesung um Angriffen auf
+drahtlose Netzwerke vorzubeugen. Eine Vielzahl von Anbietern bietet VPNs
+an die fuer die Etablierung der Sicherheit in drahlosen Netzwerken
+optimiert wurden, sog. "Wireless VPNs". VPNs bieten in einer auf
+Sicherheitausgelegten Netzwerktopologie eine gute Moeglichkeit um
+Datenubertragungen zu schuetzen und starke Verschluesselung zu
+gewaehrleisten. Die durchschnittliche Performance wird allerdings spuerbar
+darunter leiden - ein negativer Aspekt, den man aber unbedingt in Kauf
+nehmen sollte.
+
+
+WarDriver werden sich ein anderes Objekt der Begierde suchen, da IPSec
+(Verschluesselungsprotokoll, das in vielen VPN Loesungen Anwendung findet)
+Programmen wie Aisnort und Netstumbler den Wind aus den Segeln nimmt. Die
+Verwendung eines VPNs und Bereitstellung von APs in einer DMZ kapselt das
+WLAN effektiv ab und gewaehrleistet das nur autorisierter Wireless Traffic
+das intere Netzwerk erreichen kann.
+
+In dieser Situation wird der VPN Gateway hinter die APs gesetzt. Dadurch
+wird eine annehmbare Sicherheit, die VPNs bieten auch fuer auswaertige User
+die Dial-Ups, etc. verwenden gewaehrleistet.
+
+Durch die schon rein konzeptionell ersichtliche, nahezu ununterbrochene
+Uptime der wireless Devices ist es auch empfehlenswert diese mit einer
+Desktop Firewall auszustatten. Ein RADIUS Server kann diese Konstellation
+noch ergaenzen um wireless VPN Clients zu authentifizieren bevor sie den
+AP ueberhaupt erreichen koennen.
+
+Zusaetzlich wird ein RADIUS/AAA Server den Zugriff durch nicht
+registrierte APs blockieren. Weitere Massnahmen betreffen die eingehende
+Untersuchung des IP-Managements, DHCP - bzw.
+"non-expiring IP Address Lease Time" (siehe dazu rfc2131, rfc2132) und das
+Abschalten unnoetiger Ports.
+
+Fuer den Fall, dass das VPN ausschliesslich zur Zugangskontrolle fuer
+Wireless Devices dient ist die Zusammenfassung aller APs zu einem
+"grossen Segment" empfehlenswert um beispielsweise den Zugriff auf
+Zeitfenster (08.00 bis 18.00 Uhr) zu beschraenken oder eben generell nur
+VPN Traffic durchzulassen.
+
+Durch 802.1x, kann der RADIUS Server die Keys on-the-fly erstellen und
+diese an die Access Points weiterleiten, der zur Kommunikation mit den
+Clients aus den ihm zur Verfuegung stehenden Keys ein einzigartiges
+Key-Repertoire bildet und dieses zur Kommunikation nutzt.
+
+Eine VPN Funktionalitaet (oder moegliche Implementierung) des APs selber
+ist sehr zu empfehlen.
+
+
+----|4| ATTACKiNG METHODS
+
+Arp Cache Poisoning
+°°°°°°°°°°°°°°°°°°°
+
+In diesem Kapitel werden Kenntnisse des ARP Protokolls vorausgesetzt. Damit
+man das wesentliche ansprechen kann.
+
+
+
+
+----|5| WiRELESS SNiFFER
+
+Wenn  wir  WarDriven  um  anfaellige APs zu finden benutzen wir sogenannten
+Wireless-Sniffer bzw. Wireless-Scanner.
+
++ Wellenreiter (http://www.remote-exploit.org)
++ NetStumbler (http://www.netstumbler.com/)
++ AiroPeek (http://www.wildpackets.com/products/airopeek)
++ Network Associates Sniffer (http://www.sniffer.com/products/default.asp)
++ Airsnort (http://sourceforge.net/projects/airsnort)
+
+
+
+----|6| DEFAULT WiRELESS SSiD's
+
+Vendor		Product(s)		Default SSID(s)
+°°°°°°		°°°°°°°°°°		°°°°°°°°°°°°°°°
+
+3COM		AirConnect 2.4 Ghz DS	comcomcom	
+
+Bay		BayStack 650/660     	Default SSID	
+
+Cisco		Aironet BR1000/e,    	2, tsunami
+		BR5200/e, BR4800,
+		630, 640, 340
+
+Compaq		WL-100, WL-200,		Compaq
+		WL-300, WL-400
+
+Dlink		DL-713 802.11 DS AP	WLAN
+
+Intel		Pro/Wireless 2011 DSSS	101, 195, xlan, intel
+
+Linksys		WAP-11 802.11 DS AP	linksys
+
+Netgear		ME102, MA401         	Wireless
+
+SMC		SMC2526W AP,           	WLAN, BRIDGE
+		SMC2652W AP,
+		SMC2682W EZ-Connect
+
+SOHOWare     	NetBlaster II         	Gleich der MAC
+
+Symbol		AP41x1, LA41x1,       	101
+		LA41x3 
+
+Teletronics  	WL-Access Points     	any
+
+Zcomax        	XWL450 AP              	any, mello, Test
+
+Zyxel         	Prestige 316 AP      	Wireless
+
+ 
+
+----|7| WiSCAN
+
+#!/bin/sh
+#
+# thx u_
+#
+# TODO:
+# - support for -k option of wicontrol is missing (encryption keys)
+# - support for -d option of wicontrol is missing (max frame size)
+# - find out the diff between 'IBSS channel' and 'Current channel'
+#
+
+ARGV0="`basename "$0"`"
+USAGE="\
+usage: $ARGV0 [-1vlsm] [-e 0|1] [-p 1|3] [-c chlist]
+
+  $ARGV0 scans for wavelan networks...
+
+options:
+  -m            monitor signal strengh (don't scan)
+  -e 0|1        lock encryption mode (0=off, 1=on)
+  -p 1|3        lock management mode (1=ESS, 3=IBSS)
+  -c 1,2,...    specify channel list for IBSS mode
+  -l            log to file (name is auto-generated)
+  -A            audible indication when net is found
+  -Q            audible indication of signal quality
+  -v            enable trace messages
+  -1            run once"
+
+OPTSTR=mvp:c:1e:lAQ
+
+
+# system programs
+WICONTROL=wicontrol
+MIXERCTL=mixerctl
+DATE=date
+AWK=nawk
+SH=sh
+
+# constants for wlan card initialization
+#STATION="Scanner"
+#MACADDR="C0:01:DE:AD:FE:DD"
+STATION="Bin Laden"
+MACADDR="C1:AF:B1:18:71:87"
+
+# allowed channels according to wicontrol(8):
+#   ETSI  1 - 14
+#   FCC   1 - 11
+#CHLIST="1 2 3 4 5 6 7 8 9 10 11 12 13 14"
+CHLIST="1 2 3 4 5 6 7 8 9 10 11"
+
+
+#
+# functions
+#
+
+usage_exit ()
+{
+    echo "$USAGE" >&2
+    exit 2
+}
+
+signal_exit ()
+# usage: signal_number
+{
+    echo "exiting on signal $1"
+    clean_exit `expr 100 + $1`
+}
+
+clean_exit ()
+# usage: exit_code
+{
+    wictl_restore
+    exit $1
+}
+
+verbose ()
+{
+    test $VERBOSE -ne 0 && echo "TRC: $*"
+}
+
+
+#
+# wireless functions
+#
+
+WICTL_SAVBUF=
+
+wictl_save ()
+{
+    WICTL_SAVBUF="`$WICONTROL`"
+    return $?
+}
+
+
+wictl_restore ()
+{
+    test $MONITOR -eq 0 || return 0
+    if [ -z "$WICTL_SAVBUF" ]; then
+	echo "wictl_restore: nothing to do" >&2
+	return 0
+    fi
+
+    echo "restoring original card configuration"
+    (echo "$WICTL_SAVBUF"; echo "---"; $WICONTROL) | $AWK '
+
+    function getsavline (lineno,  arr)
+    {
+	if (savbuf_lines < lineno) {
+	    print "lineno: "lineno
+	    print "savbuf_lines: "savbuf_lines
+	    print "getsavline: index too large" >"/dev/stderr"
+	    return ""
+	}
+	return savbuf[lineno]
+    }
+
+    function getarg (line)
+    {
+	sub(".*\\[ ", "", line)
+	sub(" \\]$", "", line)
+	return line
+    }
+
+    /^---$/ {
+	savbuf_read = 1
+	NR = 0
+	next
+    }
+
+    !savbuf_read {
+	savbuf[++savbuf_lines] = $0
+	next
+    }
+
+    /^Power Mgmt/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0)) {
+	    flg = tolower(old) == "on"
+	    cmd = wictl" -P "flg
+	}
+    }
+
+    /^WEP encryption:/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0)) {
+	    flg = tolower(old) == "on"
+	    cmd = wictl" -e "flg
+	}
+    }
+
+    /^Station name:/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -s \""old"\""
+    }
+
+    /^Port type/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -p "old
+    }
+
+    /^MAC address:/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -m "old
+    }
+
+    /^TX encryption key:/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -T "old
+    }
+
+    /^TX rate \(selection\):/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -t "old
+    }
+
+    /^Desired netname \(SSID\):/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -n \""old"\""
+    }
+
+    /^Access point density:/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -a "old
+    }
+
+    /^RTS\/CTS handshake threshold:/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -r "old
+    }
+
+    /^Max sleep time:/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -S "old
+    }
+
+    #/^Current channel:/ {
+    /^IBSS channel:/ {
+	old = getarg(getsavline(NR))
+	if (old != getarg($0))
+	    cmd = wictl" -f "old
+    }
+
+    cmd != "" {
+	print "+ "cmd
+	if (err = system(cmd)) {
+	    print "command returned code "err", retrying" >"/dev/stderr"
+	    if (err = system(cmd)) {
+		print "command \""cmd"\" failed with code "err >"/dev/stderr"
+		#exit(err)
+	    }
+	}
+	cmd = ""
+    }
+    ' wictl="$WICONTROL"
+    WICTL_SAVBUF=
+}
+
+wictl_init ()
+{
+    test $MONITOR -eq 0 || return 0
+    wictl_save || return $?
+
+    echo "initializing card (original state saved)"
+    $WICONTROL -n ""		# set empty netname (use first available AP)
+    $WICONTROL -s "$STATION"	# set funny station name
+    $WICONTROL -m "$MACADDR"	# set funny mac address
+    $WICONTROL -p 1		# enter BSS mode (for -n "" to work)
+    $WICONTROL -t 3		# automatic transmit rate selection
+    $WICONTROL -P 0		# disable power saving feature
+}
+
+WICTL_PORT=0
+wictl_port ()
+# usage: 1|3
+{
+    test $MONITOR -eq 0 || return 0
+    test $WICTL_PORT -eq ${1:?} && return 0
+    case ${1:?} in
+    1) verbose "switching to BSS mode" ;;
+    3) verbose "switching to ad-hoc mode" ;;
+    *) verbose "wictl_port: invalid port type specified" >&2
+       return 2 ;;
+    esac
+    $WICONTROL -p $1
+    WICTL_PORT=$1
+}
+
+WICTL_ENC=0
+wictl_enc ()
+{
+    test $WICTL_ENC -eq ${1:?} && return 0
+    case ${1:?} in
+    0) verbose "disabling encryption" ;;
+    *) verbose "enabling encryption" ;;
+    esac
+    $WICONTROL -e $1
+    WICTL_ENC=$1
+}
+
+
+#
+# scanning functions
+#
+
+main_loop ()
+{
+    case "$PORTTYPE" in
+    "") dobss=1; doadhoc=1 ;;
+    1)  dobss=1; doadhoc=0 ;;
+    3)  dobss=0; doadhoc=1 ;;
+    *)  echo "main_loop: invalid port type in \$PORTTYPE" >&2
+        return 2 ;;
+    esac
+
+    case "$ENCFLAG" in
+    "") doenc=1 ;;
+    1)  doenc=1 ;;
+    0)  doenc=0 ;;
+    esac
+
+    # show channel list
+    if [ $doadhoc -ne 0 ]; then
+	echo "$CHLIST" | grep ' ' >/dev/null &&
+	(echo "channel list: $CHLIST"; true) ||
+	echo "scanning only channel $CHLIST"
+    fi
+
+    test $RUNONCE -eq 0 && echo "`$DATE`  entering main loop ..."
+    while :; do
+	if [ $doenc -ne 0 -a $dobss -ne 0 ]; then
+	    wictl_enc 1 && scan_bss
+	    wictl_enc 0
+	fi
+	test $dobss   -ne 0 && scan_bss
+	test $doadhoc -ne 0 && scan_adhoc
+	test $RUNONCE -ne 0 && break
+
+	# perhaps resetting to BSS mode is necessary if automatic mode switch
+	# to ad-hoc was implemented by the wi driver. anyway this call appeared
+	# in the wi-scan script so we include it here as well. original comment
+	# was "reset the SSID?".
+	wictl_port 1
+    done
+}
+
+chan_loop ()
+# usage: scancmd [arg1...]
+{
+    for ch in $CHLIST; do
+	if [ "$ch" != "$CHLIST" ]; then
+	    verbose "selecting channel $ch"
+	    $WICONTROL -f $ch || return $?
+	fi
+	"$@" && return 0
+    done
+    return 1
+}
+
+scan_bss ()
+{
+    # select BSS port type (network name should be empty)
+    wictl_port 1
+    scan_check 
+}
+
+scan_adhoc ()
+{
+    # select ad-hoc port type (no access point required)
+    wictl_port 3
+    chan_loop scan_check 
+}
+
+netfound=0
+scan_check ()
+{
+    err=1
+    for i in 1 2; do # always check twice
+	# one second delay between checks
+	test $i -gt 1 && sleep 1
+
+	$WICONTROL | $AWK '
+	function make_noise (comms, wep,  q)
+	{
+	    # be silent unless the appropriate flag is set
+	    if (!noise) return
+
+	    # comms = "quality signal noise"
+	    q = comms; sub(" .*$", "", q)
+
+	    # 84 notes (numbered 1 to 84) can represent max. quality of 84%
+	    if (q > 84) q = 84
+
+	    if (tolower(wep) == "on") {
+		printf "L64N%d", q >"/dev/speaker"
+		return
+	    }
+
+	    printf "L64N%dP30N%dP30N%d", q, q, q >"/dev/speaker"
+	}
+
+	function getarg (line)
+	{
+	    sub(".*\\[ ", "", line)
+	    sub(" \\]$", "", line)
+	    return line
+	}
+
+	/^Current netname/	{ net   = getarg($0) }
+	/^Current BSSID/	{ bssid = getarg($0) }
+	/^Comms quality/	{ comms = getarg($0) }
+	/^Port type/		{ portt = getarg($0) }
+	/^WEP encryption/	{ wep   = getarg($0) }
+
+	END {
+	    if (comms == "0 27 27") {
+		# no connection (quality 0, signal and noise at max)
+		#exit(1)
+	    }
+	    if (bssid == "") {
+		# this can happen after wakeup from APM standby mode
+		exit(1)
+	    }
+	    if (portt == 1 && bssid == "44:44:44:44:44:44") {
+		# in BSS mode the above MAC is displayed if no BSS is in range
+		exit(1)
+	    }
+	    if (portt == 3 && bssid == "00:00:00:00:00:00") {
+		# in IBSS mode the above MAC is displayed if no BSS is in range
+		exit(1)
+	    }
+
+	    make_noise(comms, wep)
+	    datecmd | getline date; close(datecmd)
+	    pdesc = "BSS"; if (portt == 3) pdesc = "Ad-hoc"
+	    printf "%s  \"%s\" (%s, %s, %s, WEP %s)\n",
+		    date, net, bssid, comms, pdesc, wep
+	    exit(0)
+	}
+	' datecmd="$DATE" noise=$QFLAG
+	err=$?; test $err -eq 0 && break
+    done
+
+    if [ $AFLAG -ne 0 ] && [ $err -eq 0 -a $netfound -eq 0 ]
+    then netfound=1
+	for dummy in 1 2 3; do
+	    echo "O5L64CDEFGAB" >/dev/speaker
+	done
+    elif [ $err -ne 0 ]
+    then netfound=0
+    fi
+    return $err
+}
+
+
+#
+# main
+#
+
+MONITOR=0
+LFLAG=0
+AFLAG=0
+QFLAG=0
+VERBOSE=0
+RUNONCE=0
+PORTTYPE=
+ENCFLAG=
+
+while getopts $OPTSTR c; do
+    case "$c" in
+    m)  MONITOR=1 ;;
+    l)  LFLAG=1 ;;
+    A)  AFLAG=1 ;;
+    Q)  QFLAG=1 ;;
+    1)  RUNONCE=1 ;;
+    v)  VERBOSE=1 ;;
+    e)  ENCFLAG="$OPTARG" ;;
+    c)  CHLIST="$OPTARG" ;;
+    p)  PORTTYPE="$OPTARG" ;;
+    -)  shift; break ;;
+    *)  usage_exit ;;
+    esac
+done
+
+# catch common signals
+for s in 1 2 3 13 15; do trap "signal_exit $s" $s; done
+
+# output redirection !!!
+if [ $LFLAG -ne 0 ]; then
+    LOGFILE="`$DATE +%y%m%d%H%M`.log"
+    echo "logging to: $LOGFILE"
+    exec >"$LOGFILE"
+    echo "# $0 $@"
+fi
+
+# no arguments accepted
+shift `expr $OPTIND - 1`
+test $# -eq 0 || usage_exit
+
+# replace ',' with a space to avoid quoting
+CHLIST="`echo "$CHLIST" | sed 's/[, 	][, 	]*/ /'`"
+if [ -z "`echo "$CHLIST" | tr -d '[:blank:]'`" ]; then
+    echo "${ARGV0}: empty channel list!" >&2
+    exit 1
+fi
+
+if [ $MONITOR -ne 0 ]; then
+    while :; do scan_check && sleep 1; done
+    clean_exit $?
+fi
+
+# save card configuration and enter main loop
+wictl_init && main_loop
+clean_exit $err
+
+
+
+----|7| GREETiNGS
+
+.karo		Luv' ya babe! *kisses* 
+.docfx		Coding Style? Coding Style! 
+.consi		Bite me man! 
+.scarface   	You rock brudaz
+.jackie		Rock steady bitch xD=  
+._MAX_    	Fuer das Erstellen von Wellenreiter, Anregungen
+               	und Hinweise!
+.holiday/thc	Thanks for your ideas
+.fippo        	Beta-Lesen und Anregungen
+.dawn          	Du lebst ja doch! :p
+
+
+Gruesse auch an alle die ich vergass. ;)=
+
+
+
+----|8| REFERENCES
+
+	[A] WEP-Schwachstellen: 
+	    http://www.isaac.cs.berkeley.edu/isaac/wep-draft.pdf
+	[B] WEP FAQ:
+	    http://www.isaac.cs.berkeley.edu/isaac/wep-faq.html
+	[C] WLAN Sicherheit Whitepaper:
+	    http://www.wlana.com
+	[D] Wireless Access Points und ARP Poisoning
+	    http://www.cigitallabs.com/resources/papers/download/
+	    arppoison.pdf
+
+|=[ EOF ]=---------------------------------------------------------------=|

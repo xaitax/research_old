@@ -1,0 +1,341 @@
+HYPERLiNK-SPOOFiNG
+der Angriff auf die SSL-Server-Authetifikation
+
+1.) Einführung
+2.) Der Hintergrund des Hyperlink-Spoofing
+3.) Die Hyperlink-Spoofing-Attacke "bei der Arbeit"
+4.) Massnahmen gegen das Hyperlink-Spoofing
+5.) Die laengerfristige Loesung gegen das Hyperlink-Spoofing
+6.) Abschliessend
+
+
+1.) Einführung
+
+In diesem Paper moechte ich euch mal eine etwas andere Angriffsform
+naeher bringen, welche den Angriff auf das HTTP Protokoll nutzt. Man
+richtet diesen Angriff gegen das Server-Authentikationsprotokoll
+Secure Socket Layer (SSL), welches in gesicherten Browsern wie z. B.
+denen von Netscape, Microsoft, Opera und anderen verwendet wird.
+
+Ein "man-in-the-middle"-Hacker kann den Server dazu missbrauchen, sich
+mit einem vorgetaeuschten Server zu verbinden. Dabei wird dem Browser
+das uebliche Erscheinungsbild einer gesicherten Sitzung geboten.
+
+Ihr wisst nicht was ein "man-in-the-middle"-Hacker ist? Pech ;) Nein,
+unter einem "man-in-the-middle"-Hacker versteht man eine Technik, bei
+der man sich in den Paketstrom zwischen Server und Clinet
+einschleusst. Ein weiteres Risiko des Hyperlink-Spoofing (ein
+vorgetaeuschter Hyperlink) besteht darin, dass der Anwender (z. B. ein
+Bank- oder Datenbank-Client) "boesartige" Java-Applets vom Server
+herunterlaedt, weil er glaubt, die Applets wuerdem vom echten Server
+stammen.
+
+Das Hyperlink-Spoofing nutzt ein Sicherheitsloch, weil die meisten
+Browser digitale Zertifikate verwenden, um Websitzungen zu sichern.
+Das Hyperlink-Spoofing richtet sich nicht gegen die kryptografische
+Ebene oder den Ablauf von SSL. Deshalb kann dieser Angriff auch gegen
+andere mit digitalen Zertifikaten gesicherte Applikationen gerichtet
+werden.
+
+Internet Explorer + 3x, Netscape Navigator + 4x sind anfaellig
+gegenueber dieser Angriffsart. Es sind auch andere Browser und
+SSL-Proxies anfaellig fuer Hyperlink-Spoofing, das mag unter anderem
+schon an fehlerhafter Konfiguration liegen. Techniken, die ebenfalls
+mit Zertifikaten arbeiten, wie signierter Code oder signierte Applets,
+ sind davon nicht betroffen.
+
+Angreifer koennen jeden SSL-Server verkoerpern, indem sie sich nach
+den ueblichen Konventionen fuer Zertifikate richten oder auf die zuvor
+aufgelisteten Browser zugreifen. Darueber hinaus sind auch
+Server-Zertifikate wie die von Verisign anfaellig, wenn Browser wie
+Internet Explorer oder Netscape Navigator eingesetzt werden.
+Modifikationen der serverseitigen Software machen diese Art des
+Angriffes weniger erfolgreich. Langfristig ist es die beste Loesung,
+sowohl den Zertifikatsinhalt als auch den normalen Web-Browser zu
+modifizieren. Wie schon zuvor ausgefuerhrt, sind Client-Zertifikate,
+das Java-Applet-Signieren und die von Server fuer Code verwendeten
+Zertifikate, wie bei ActiveX Controls, nicht betroffen.
+
+
+2.) Der Hintergrund des Hyperlink-Spoofing
+
+Wenn ein Anwender eine SSL-Verbindung aufbaut, vereinbaren der Browser
+und der Server ein Protokoll, um den Server und optional den Client zu
+athentizieren. Die Hyperlink-Spoofing-Methode zielt ausschliesslich
+auf die Server-Authentikation ab. Waehrend der Initialschritte des
+SSL-Protokollaufbaus erhaelt der Client vom Server ein Zertifikat
+angeboten. Es handelt sich dabei um eine Struktur, die mit einer
+digitalen Signatur versehen ist, in der der oeffentliche Schluessel
+des Servers mit bestimmten Attributen verbunden ist.
+
+SSL verwendet einen Domain-Name-Server-(DNS-)Namen im Zertifikat.
+Alternativ dazu kann das Zertifikat einen Platzhalter anstelle des
+vollstaendigen Namens enthalten(er koennte www.bnd.de oder *.bnd.de
+lauten). Durch den korrekten Protokollaufbau und das Praentieren eines
+gueltigen Zertifikats, dem der Client vertraut, stellt der Server fuer
+den Browser sicher, dass er ueber den korrespondierten privaten
+Schluessel verfuegt. Der Browser akzeptiert diese Pruefung und weiss
+nun, dass der Server wirklich er ist bzw. dass er das Recht hat, den
+gezeigten DNS-Namen zu fuehren. Fuer das Hyperlink-Spoofing ist SSL
+nicht das eignetliche Problem. Statt dessen sind der Inhalt der
+Zertifikate und die Anwenderschnittstelle des Browsers die kritischen
+Punkte.
+
+
+3.) Die Hyperlink-Spoofing-Attacke "bei der Arbeit"
+
+Die Hyperlink-Attacke kann erfolgreich sein, weil die meisten Anwender
+Verbindungen nicht mit DNS-Namen oder URLs herstellen, sondern ueber
+Hyperlinks. Der aktuelle Entwicklungsstandsstand von SSL reicht nur
+zum Pruefen des Serveranteils in der URL, jedoch nicht zum Pruefen des
+Hyperlinks, auf den der Anwender klickte.
+
+Genauso wie DNS-Namen gegenueber dem DNS-Spoofing anfaellig sind (ein
+DNS-Server "luegt" bezueglich seiner Internet-Adresse), so sind URLs
+das Zielobjekt fuer das Hyperlink-Spoofing, bei der eine Website ueber
+den DNS-Namen einer URL unwahre Angaben macht. Beide Spoofing-Formen
+steuern einen auf die falsche Site. Hyperlink-Spoofing laesst sich vom
+technischen Standpunkt aus betrachtet leichter durchfuehren als das
+DNS-Spoofing. Beispielsweise koennte man dem Browser des Opfers
+folgendes mit auf den Weg geben:
+
+Klicken Sie hier fuer kostenlose Angebote aller Art.
+
+Man sieht einen Link, der verspricht, dass es dort kostenlose Angebote
+aller Art gibt. Wenn man darauf klickt, wird man zu einem anderen
+gesicherten Server geschickt(attacking.com) und landet im Verzeichnis
+infogatherer. Die heutige Browser-Generation stellt fest, ob es sich
+um eine gesicherte Verbindung handelt, und zeigt dies entsprechend an.
+Dennoch hat man das Opfer ueberlistet. Man benutzt dazu einige Tricks
+auf die ich spaeter noch zurueckkomme.
+
+Nun hat man zwar eine "vertrauliche" Verbindung, aber leider mit dem
+falschen Server. Natuerlich bietet die infogathering-Site keine
+kostenlosen Angebote. Statt dessen befindet man sich mitten in einem
+Angriff. Der Angreifer hat dafuer gesorgt, dass die Website wie das
+Original aussieht - das man sonst zur Eingabe einer Kreditkartennummer
+auffordert, bevor man die eigentlichen kostenlosen Angebote erhaelt.
+
+Wenn man sich in die Tiefen seines Browsers begibt, und den Source des
+Dokuments oder die Dokumentinformationen betrachtet, wird man
+feststellen, dass es sich bei der authentizierten Identitaet
+keineswegs um den Server handelt, den man erwartet hat.
+
+Als Serverzertifikate weitere Verbreitung fanden, wurde das
+Aufrechterhalten der Server-Authentikation pradoxerweise schwieriger
+und nicht einfacher. Weil mehr Server ueber Zertifikate verfuegen,
+haben Angreifer eine groessere Auswahl fuer das Umleiten des
+leichtsinnigen Surfers. Ausserdem schalten viele Anwender den
+Zertifikatsdialog ab, weil der man jedesmal von dem Browser gewarnt
+wird, wenn man eine neue Website ansteuert. Darueber hinaus ist es
+nicht besonders hilfreich, ein gesichertes Dokument anzufordern, wenn
+man weiss, dass jede Verbindung und jedes Dokument gesichert sind. Mit
+anderen Worten: Das Verifizieren der Serververbindung wird
+ausschliesslich bedeutungslos.
+
+Abgesehen von der umfangreichen Authentikation gibt es keine
+Ueberwachungsaufzeichnung, mit der der Anwender nachvollziehen
+koennte, was beim Hyperlink-Spoofing geschehen ist. Im guenstigsten
+Fall zeigt das Logbuch des Browsers das es einen HTTP-(oder
+HTTPS-)GET-Befehl an den echten und einen anderen an den gefaelschten
+Server gab. Mit etwas Glueck koennte sich im lokalen Cache noch die
+veraenderte Seite finden lassen. Tatsaechlich kann der Angreifer die
+Seite aber sehr leicht mit dem PRAGMA-Befehl aus dem Cache entfernen.
+Waehrend eines Spoofing-Angriffs tritt die zweite GET-Anforderung auf,
+weil die erste einen inkorrekten, verfaelschten Inhalt hatte. Leider
+ist es auch mit dem besten aller Logbuecher nicht moeglich, das
+Initiieren des zweiten GET-Befehls durch die zweite Seite zu
+verifizieren. Der zweite GET-Befehl koennte durch einen Bookmark oder
+mit einem anderen Fenster verursacht worden sein. Sogar wenn man
+vollig ist, das man keine Bookmarks verwendet, koennte das Falsifikat
+immer noch von einem Cache (auch von einem Nachbarcache des ISP)
+stammen. Man kann zwar vermuten, dass die Website von einem Angreifer
+ist, belegen kann man es aber nicht (obwohl man moeglicherweise die
+Schritte wiederholen koennte, die einen zur Spoofing-Site brachte, und
+ dann den Angreifer in flagranti zu ertappen).
+
+Es liegt nicht im Interesse des Angreifers, einen zu seiner
+gesicherten Seite zu locken (weil man damit das Zertifikat des
+Angreifers ermitteln wuerde und somit ein grosser Schritt zur
+Ermittlung seiner Identitaet gemacht waere). Der Angreifer schickt
+einen zur SSL-Box von jemand ganz anderen, vielleicht sogar zu einer
+Site, zu der man wirklich will. Mit anderen Worten wuerde die URL
+/attackseite anstelle von /sichereseite lauten. Diese Art der
+"verbogenen" Adressierung erfolgt hauptsaechlich bei virtuell
+aufgebauten Websites oder Websites, bei denen die URL ein CGi-Script
+oder eine Java-Klasse angibt, die von einem Angreifer legitimierte
+kontrolliert wird. (Um fair zu bleiben: SSL wurde nicht konzipiert, um
+diese Ebene der Sicherheitsfragen auch noch abzudecken. Es ist nur
+dazu gedacht Websites zu authentizieren).
+
+
+4.) Massnahmen gegen das Hyperlink-Spoofing
+
+Falls man bereits Web-gestuetzte Applikationen einstetzt, die sich auf
+die Server-Authentikation verlassen, und man kann nicht auf ein Update
+des Internet-Software-Providers warten, besteht die einzige derzeit
+machbare Loesung darin, den Anwender auf einer wirklich gesicherten
+Seite starten zu lassen. Die Anwender koennen dann den Empfangslinks
+vertrauen und der Angreifer ist nicht mehr in der Lage, einen in
+gefaehrliche Bereiche zu schicken.
+
+Eine gesicherte Seite ist eine Seite, auf deren Integritaet man sich
+verlassen kann. In der Praxis bedeutet dies, dass man eine lokale
+HTML-Seite oder eine gesicherte Seite auf einem SSL-Server verwendet.
+
+Falls man den Brwoser eines Anwenders dafuer vorsehen, eine SSL-Seite
+zu oeffnen, muss man die URL fuer die Seite auf einen Weg versenden,
+der schwierig, am besten so gut wie gar nicht, zu unterbrechen ist (z.
+B. auf einer Diskette oder einem Brief per Post ;). Andernfalls stellt
+die Seite einen Ansatzpunkt fuer den Angriff dar, den man verhindern
+wollte. Alle Links, die aus dieser Seite herausfuehren, muessen den
+Anwender zu vertrauenswuerdigen Sites weiterleiten. Ausserdem sollte
+es sich bei allen um SSL-Links handeln. Man legt fest, welche Sites
+man als vertrauenswuerdig einstuft. Dazu orientiert man sich am besten
+an den folgenden zwei Kriterien:
+
+1. Die Site wird gesichert betrieben (das bedeutet, die gesamte Site
+ist gegen Angriffe und das Abfangen von Seiten gesichert).
+
+2. Die Site bedient nur Hyperlinks zu gesichert betriebenen Sites.
+
+Das erste Kriterium trifft fuer die meissten Sites nicht zu. Deshalb
+ist der gesicherte Zugriff auf Seiten nur fuer Intranet-Applikationen
+moeglich, die sich hinter einer Firewall befinden, oder fuer
+Applikationen, bei denen die Anwender nur auf die firmierten
+betriebenen Sites zugreifen und deshalb den Zugriff auf das Internet
+nicht benoetigen.
+
+Alternativ kann man ein relativ unverwechselbares Objekt auf einer
+Website unterbringen. Beispiele sind die Zertifikate Verisign Java und
+Microsoft Athenticode. Weil Verisign die Zertifikate und die
+zugehoerigen Applets aus einem numerischen Hash der Website erzeugt,
+ist es fuer Angreifer sehr schwer, das Zertifikat zu simulieren.
+
+Die dritte Moeglichkeit leasst sich recht schnell realisieren. Die
+meisten Webbrowser bieten Sicherheitsoptionen an. Eine dieser Optionen
+ermoeglicht es, Site-basierte Zertifikate einzusehen. Man sollte sich
+einfach mal die Optionen die einem der Browser bietet, sie sind
+zahlreich, sehr genau anschauen, damit eine grosse Sicherheit
+gewaehrleistet wird.
+
+Die vierte Moeglichkeit einer Abhilfe waere die Verwendung von
+gesicherten Bookmarks. Sicherheitsbeauftragte testen und verifizieren
+jedes gesicherte Bookmark, bevor es in die entsprechende Datei des
+Browsers aufgenommen wird. Zusaetzlich sollte jedes Bookmark nur
+manuell weitergegeben werden, z. B. auf einer Diskette. Die
+gesicherten Bookmarks koennen besonders gekennzeichnet werden, damit
+jedem Anwender klar wird, womit er es zu tun hat. Hier muesste durch
+ein Plug-In fuer den Browser eine Grundlage geschaffen werden, die das
+Vewenden gesicherter Bookmarks erzwingt. Ein gesichertes Lesezeichen
+koennte aus einem Hyperlink-Text, von Bildern oder von URL´s
+abgeleitet werden. Ein entsprechender Eintrag koennte so aussehen:
+
+"*KryptoKom*:**.kryptokom.de*"
+
+"Sieht" der Browser einen Link mit dem Text "KryptoKom", dann prueft
+er, ob es in der Domaene kryptokom.de ein Server-Zertifikat gibt. Er
+stellt damit gleichzeitig sicher, dass die Verbindung wirklich zu
+Kryptokom.de aufgebaut wird. Bei der Verbindung mit einer anderen Site
+wuerde der Browser den Anwender davor warnen, dass die mit ihm
+verbundene Domaene identisch mit der von ihm erwarteten ist. Optional
+koennte die Verwendung entsprechender Lesezeichen erzwungen werden, so
+dass Anwender nur mit den Sites Verbindungen herstellen koennen, bei
+denen die Namen der Domaenen uebereinstimmen. Diese Loesung sorgt
+dafuer, dass die Anwender die Sicherheitsmassnahmen fuer ihre Browser
+konfigurieren, um auf die "lokalen" hochwertigen Dienste zuzugreifen,
+und verhindern, dass weniger trainierten Anwender zufaellig
+ungeschuetzte Informationen verschicken.
+
+Grundsaetzlich behebt die Lesezeichenloesung die Luecke zwischen dem
+Link-Text und dem URL-Domaenennamen. Jeder der zuvor besprochenen
+Loesungsansaetze versucht, das Mapping zu ersetzen oder dem Anwender
+zu versichern, dass das Mapping korrekt ist. Dies ist aber nicht der
+einzige Weg, gesichertes Mapping fuer Web-Adressen bereitzustellen.
+Man koennte z. B. auch einen gesicherten Internet-Verzeichnisdienst
+oberhalb der zertifizierten Website-Protokolle anlegen. Leider wuerde
+dies aber auch bedeuten, eine kuenstliche Ebene des Weiterleitens
+zwischem dem Link, der Identitaet der Site und der Site selbst (dem
+privatem Schluessel) herzustellen, damit wuerden nicht nur einige der
+anderen Loesungssaetze in Frage gestellt, sondern es waere auch
+schwieriger, die Sicherheit der Links zu garantieren. Keiner der
+diskutierten Loesungsansaetze kann verhindern, dass eine Verbindung zu
+beliebigen Diensten im Netz hergestellt wird. Ausserdem hilft keine
+der gezeigten Loesungen gegen Adressverbiegungen innerhalb einer Site.
+
+5.) Die laengerfristige Loesung gegen das Hyperlink-Spoofing
+
+Das Hyperlink-Spoofing stellt ein hohes Risiko fuer die
+Datensicherheit dar, wenn sich Anwender im Internet bewegen. Das
+grundlegende Problem mit dem Hyperlink-Spoofing besteht darin, dass
+die von SSL bereitgestellten Zertifikate falsche Informationen
+enthalten, den Namen des DNS-Servers. Der DNS-Name ist mehr ein
+technisches Detail als die URL, die selbst wiederum mehr ein
+technisches Detail ist, als der Hyperlink, auf den der Anwender
+klickt. Mit der zunehmenden Zahl technisch untrainierter Anwender im
+Internet sollte weniger technische Inhalte von den Zertifikaten
+angezeigt werden.
+
+Die meissten Anwender greifen auf das Internet mit Hilfe von URLs und
+nicht von DNS zu und gehen davon aus, dass hinter einer URL schon der
+erwartete Partner zu finden ist.
+
+Der durchschnittliche User versteht die Bedeutung der DNS nicht,
+weshalb die Authentikation von DNS-Namen wenig oder gar keinen Sinn
+hat. Viele Anwender kennen ueber die in Print-Medien oder im TV
+veroeffentlichten URLs wie www.firma.de hinaus keine weitergehenden
+URL-Konstrukte. Darueber hinaus sind die aktuellen Weiterentwicklungen
+wie "freundliche URLs" im Internet Explorer bei denen auf die gesamte
+Site mit minimalen Aenderungen in der Anzeige der URL zugegriffen
+wird, ein weiterer Schritt in den Unterschied zwischen dem, was der
+Anwender angezeigt bekommt und dem Server-Zertifikat.
+
+Das von den Internet-Verantwortlichen zu loesende Problem ist, was ein
+Zertifikat zertifizieren soll. Dies ist einerseits von der Applikation
+abhaengig. Bei einigen Applikationen (z. B. Befehlszeilen-FTP) ist der
+DNS-Name gut fuer das Anzeigen des Zertifikats geeignet, wie er vom
+Anwender ohnehin eingetippt wurde. Beim Betrieb eines Browsers sollte
+das Zertifikat jedoch das Hyperlink-Bild, den Text oder eine andere
+Besonderheit der Website enthalten, die dem Browser durch die
+zertifizierte Seite uebermittelt wird, moeglicherweise ueber den Tag .
+Das Zertifikat koennte die folgenden Informationen enthalten:
+
+- repraesentative Bilder (Firme- und Produktlogos, Gesichter von
+Leuten)
+- englische (die haeufigste Serversprache) oder national-sprachliche
+Redewendundgen, die sich gut als Links einsetzen lassen. Dabei waere
+zu beruecksichtigen, ob der Aufbau durch die das Zertifikat
+ausstellende Autoritaet oder durch die Applikation bestimmt wird.
+
+Obwohl URLs im wesentlichen fuer das Web zugreifende Applikationen
+sehr nuetzlich sind, wuerden sie innerhalb von Zertifikaten
+Platzhalter oder Ausdruecke enthalten. Man sollte beachten, dass
+dieser URL-Typ meist Intranet-Applikationen oder Daten repraesentiert
+und deshalb wahrscheinlich eher durch eine
+Intranet-Zertifikationsautoritaet als durch Internet-Dienste wie
+Verisign zertifiziert wird.
+
+Enthaelt das Zertifikat ein Bild, kann es vom Browser in ein
+Dialogfenster plaziert und angezeigt werden. Es koennte auch im
+Bild-Fenster anstelle der Logos von Netscape oder des Internet
+Explorers angezeigt werden. Dies wuerde dem Anwender permanent zeigen,
+mit wem er verbunden ist. Selbst technisch weniger Trainierte kennten
+feststellen, dass man nicht mit der Seite verbunden ist, mit der man
+verbunden sein wollte.
+
+Ausserdem koennte der Browser mit wenigen Aenderungen Zertifikate
+automatsich pruefen. Folgt der Anwender einem Link mit einem Bild,
+koennte der Browser das enthaltene Zertifikat pruefen. Erscheint das
+Bild nicht, erhaelt der Anwender eine Warnung. Folgt der Anwender
+einem Textlink, untersucht der Browser die Funktion des Texts. So
+koennte der Browser z. B. das Zertifikat fuer einen Zeichenkettenteil
+des Text-Links oder eine bekannte Hash-Funktion des Links pruefen. Das
+Verifizieren des Bildes oder des Textlinks wuerde dem Anwender die
+gesicherte Erkenntnis liefern, dass der Link in einer
+Ende-zu-Ende-Relalion einwandfrei ist und kein Spoofing zulaesst.
+
+ah@primepage.de | http://xaitax.de | PGP: http://xaitax.de/xaitax.asc
+
+[EOF]
+
+xaitax (alexander hagenah)

@@ -1,0 +1,73 @@
+                             T . E . A . M
+
+         .   .  .. ................................................ ...  
+    .                 ______    ______  _____ ____________          :.:.:
+    .                 /    | ____|     |                           :..
+    :                /     |/    |     |    |       _____/             :
+    :                |           |           |   /                     :
+    :..              |           |           |  /  ____/                :
+    ..:..            __________ |    |     |______/ advisory          .
+    :.: :.........................___| ___/............... ..  .   .   
+                                   ::                                    
+                                   . http://www.u-n-f.com
+
+--/ INTRODUCTION  --
+
+
+Advisory           : UNF.20-11_ISM.DLL_HTR
+Release Date       : 10. November 2001
+Application        : M$ IIS 4.0+5.0
+Impact             : Reading out some datas.
+Vendor Status      : M$ doesn´t know that bug but still fixed it 
+                     coincidental.
+Author             : xaitax [xaitax@u-n-f.com]
+
+
+--/    SUMMARY    --
+
+
+If you are requesting a filname from a running IIS 4.0 or 5.0 with the
+appendage of '+' and then following the extension '.htr' the webserver 
+will call ISM.DLL to deal this request. If the '+' exists in the 
+filename the ISM.DLL truncates the '+.htr' extension and will open the 
+requested file.
+If the requested file is not a '.htr' file, a part of the file source code 
+will be shown to the attacker.
+Maybe the requested file contains some really sensitive informations
+like usernames ans passwords.
+But the files you want to read out must have read and execute attributes.
+The Bug was tested with IIS => 4 ant worked fine. 
+
+   
+--/    EXPLOIT    --
+
+
+The URL below should be put into your browser. Wait for the output of 
+the browser and have a nice look at the source code you get.
+
+http://www.attacking.com/readoutfile.ext+.htr
+
+
+--     PATCH     /--
+
+
+If the HTR funcion isn´t neccessary for you, remove HTR Script mapping
+else wait for a patch M$ will release soon.
+
+The Service Pack 2 [2K] fixes the bug, too. 
+
+
+--/   LAST WORD   --
+
+
+There were some ISM.DLL Bugs earlier. But M$ won´t ever solve the problem
+to fix all bugs, so this one was released now.
+
+
+Shout outs:
+TEAM TESO, THC, USF
+
+UNF - UNITED NET FRONTIER
+http://www.u-n-f.com
+team@u-n-f.com
+
